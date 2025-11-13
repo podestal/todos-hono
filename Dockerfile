@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Expose default dev port
 EXPOSE 3000
+EXPOSE 5000
 
 # Default command: interactive shell
 CMD ["bash"]
