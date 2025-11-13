@@ -1,26 +1,23 @@
 import { Hono } from 'hono'
-import { cors } from 'hono/cors'
+import corsMiddleware from './middleware/cors'
 
 const app = new Hono()
 
-// Enable CORS for all routes
-app.use('/*', cors({
-  origin: ['http://localhost:5000'], // Allow requests from your frontend
-  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowHeaders: ['Content-Type'],
-  credentials: true,
-}))
+app.use('/*', corsMiddleware)
+const router = app
 
-app.get('/', (c) => {
+.get('/', (c) => {
   return c.text('Hello Hono!')
 })
 
-app.get('/api/people', c => {
+.get('/api/people', c => {
   return c.json([
     { id: 1, name: 'Alice' },
     { id: 2, name: 'Bob' },
     { id: 3, name: 'Charlie' },
   ])
 })
+
+export type AppType = typeof router
 
 export default app
