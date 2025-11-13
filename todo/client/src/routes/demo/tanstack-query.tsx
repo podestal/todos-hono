@@ -8,12 +8,14 @@ export const Route = createFileRoute('/demo/tanstack-query')({
 function TanStackQueryDemo() {
   const { data } = useQuery({
     queryKey: ['todos'],
-    queryFn: () =>
-      Promise.resolve([
-        { id: 1, name: 'Alice' },
-        { id: 2, name: 'Bob' },
-        { id: 3, name: 'Charlie' },
-      ]),
+    queryFn: async () => {
+      const resp = await fetch('http://localhost:3000/api/people')
+      console.log(resp)
+      if (!resp.ok) {
+        throw new Error('Failed to fetch people')
+      }
+      return resp.json()
+    },
     initialData: [],
   })
 
