@@ -14,3 +14,19 @@ services:
     # Environment variables (add your own later)
     environment:
       - NODE_ENV=development
+
+  postgres:
+    image: postgres:17.5
+    container_name: hono-todos-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=todos
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
