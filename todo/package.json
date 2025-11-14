@@ -4,7 +4,8 @@
     "dev": "bun run --hot server/index.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio --host=0.0.0.0 --port=4983"
+    "db:studio": "drizzle-kit studio --host=0.0.0.0 --port=4983",
+    "db:seed": "bun run ./scripts/seed-local-db-script.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.7",
@@ -14,6 +15,7 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/pg": "^8.15.6",
-    "drizzle-kit": "^0.31.6"
+    "drizzle-kit": "^0.31.6",
+    "drizzle-seed": "^0.3.1"
   }
 }
