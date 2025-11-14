@@ -29,7 +29,12 @@ function RouteComponent() {
             <h1 className="text-2xl font-bold mb-4">Todos</h1>
             <ul className="space-y-2">
                 {todos.map((todo) => (
-                    <li key={todo.id}>{todo.title}</li>
+                    <li 
+                        className="flex items-center gap-4"
+                        key={todo.id}>
+                        <input type="checkbox" checked={todo.completed} onChange={() => {}} className="checkbox checkbox-primary" />
+                        <span className="text-lg text-white">{todo.title}</span>
+                    </li>
                 ))}
             </ul>
         </div>
