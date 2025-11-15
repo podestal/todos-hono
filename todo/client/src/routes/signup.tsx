@@ -1,17 +1,35 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { authClient } from '@/lib/auth-client'
 
 export const Route = createFileRoute('/signup')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    authClient.signUp.email({
+      email: 'test@test.com',
+      password: 'password',
+      name: 'Test User',
+    }).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.error(err)
+    })
+  }
   return (
     <div className='bg-base-200 min-h-screen flex items-start justify-center'>
       <div className='card w-96 bg-base-300 shadow-xl mt-10'>
         <div className='card-body'>
           <h2 className='c text-center pt-8 text-2xl font-semibold'>Create an account</h2>
           <p className='text-center text-sm text-gray-500 mb-4'>Sign up to get started</p>
-          <form className='flex flex-col gap-4'>
+          <form 
+            className='flex flex-col gap-4'
+            onSubmit={handleSubmit}
+          >
             <div className='form-control'>
 
               <input type='text' placeholder='Full Name' className='input input-bordered' />
