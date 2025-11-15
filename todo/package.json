@@ -5,7 +5,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio --host=0.0.0.0 --port=4983",
-    "db:seed": "bun run ./scripts/seed-local-db-script.ts"
+    "db:seed": "bun run ./scripts/seed-local-db-script.ts",
+    "open-auth-docs": "open-cli http://localhost:3000/api/auth/reference"
   },
   "dependencies": {
     "better-auth": "^1.3.34",
@@ -17,6 +18,7 @@
     "@types/bun": "latest",
     "@types/pg": "^8.15.6",
     "drizzle-kit": "^0.31.6",
-    "drizzle-seed": "^0.3.1"
+    "drizzle-seed": "^0.3.1",
+    "open-cli": "^8.0.0"
   }
 }
