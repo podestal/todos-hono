@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { authClient } from '@/lib/auth-client'
 import { useState } from 'react'
 
@@ -12,6 +12,8 @@ function RouteComponent() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+
+  const router = useRouter()
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -25,6 +27,11 @@ function RouteComponent() {
       name,
     }).then((res) => {
       console.log(res)
+      setName('')
+      setEmail('')
+      setPassword('')
+      setConfirmPassword('')
+      router.navigate({ to: '/todos' })
     }).catch((err) => {
       console.error(err)
     })
