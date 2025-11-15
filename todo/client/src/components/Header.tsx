@@ -1,30 +1,39 @@
 import { Link } from '@tanstack/react-router'
 
 import { useState } from 'react'
-import { Home, Menu, Network, X } from 'lucide-react'
-
+import { Home, LogOut, Menu, Network, X } from 'lucide-react'
+import { authClient } from '@/lib/auth-client'
+import { useRouter } from '@tanstack/react-router'
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+
+  const router = useRouter()
+
+  const handleSignOut = () => {
+    authClient.signOut().then(() => {
+      router.navigate({ to: '/signin' })
+    })
+  }
 
   return (
     <>
       <header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-          aria-label="Open menu"
-        >
-          <Menu size={24} />
-        </button>
-        <h1 className="ml-4 text-xl font-semibold">
-          <Link to="/">
-            <img
-              src="/tanstack-word-logo-white.svg"
-              alt="TanStack Logo"
-              className="h-10"
-            />
-          </Link>
-        </h1>
+        <div className='flex items-center justify-start gap-4 w-full'>
+          <button
+            onClick={() => setIsOpen(true)}
+            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+            aria-label="Open menu"
+          >
+            <Menu size={24} />
+          </button>
+          <h1 className="ml-4 text-xl font-semibold">
+            <Link to="/">
+              <p className='text-2xl font-semibold'>Todo App</p>
+            </Link>
+          </h1>
+        </div>
+        <LogOut size={24} className='text-white hover:text-gray-300 cursor-pointer' onClick={handleSignOut} />
+        
       </header>
 
       <aside

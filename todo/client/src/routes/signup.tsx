@@ -1,6 +1,6 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router'
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { authClient } from '@/lib/auth-client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const Route = createFileRoute('/signup')({
   component: RouteComponent,
@@ -14,7 +14,15 @@ function RouteComponent() {
   const [confirmPassword, setConfirmPassword] = useState('')
 
   const router = useRouter()
-  
+
+  const { data: session } = authClient.useSession()
+
+  useEffect(() => {
+    if (session) {
+      router.navigate({ to: '/todos' })
+    }
+  }, [session])
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (password !== confirmPassword) {
@@ -87,6 +95,7 @@ function RouteComponent() {
               <button type='submit' className='btn btn-primary'>Signup</button>
             </div>
           </form>
+          <p className='text-center text-sm text-gray-500 mt-4'>Already have an account? <Link to='/signin' className='text-cyan-600 hover:text-cyan-700'>Login</Link></p>
         </div>
       </div>
     </div>
