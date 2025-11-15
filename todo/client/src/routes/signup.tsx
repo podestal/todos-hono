@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { authClient } from '@/lib/auth-client'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/signup')({
   component: RouteComponent,
@@ -7,13 +8,21 @@ export const Route = createFileRoute('/signup')({
 
 function RouteComponent() {
 
-
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (password !== confirmPassword) {
+      console.log('Passwords do not match')
+      return
+    }
     authClient.signUp.email({
-      email: 'test@test.com',
-      password: 'password',
-      name: 'Test User',
+      email,
+      password,
+      name,
     }).then((res) => {
       console.log(res)
     }).catch((err) => {
@@ -32,16 +41,40 @@ function RouteComponent() {
           >
             <div className='form-control'>
 
-              <input type='text' placeholder='Full Name' className='input input-bordered' />
+              <input 
+                type='text' 
+                placeholder='Full Name' 
+                className='input input-bordered' 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
             <div className='form-control'>
-              <input type='email' placeholder='Email' className='input input-bordered' />
+              <input 
+                type='email' 
+                placeholder='Email' 
+                className='input input-bordered' 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className='form-control'>
-              <input type='password' placeholder='Password' className='input input-bordered' />
+              <input 
+                type='password' 
+                placeholder='Password' 
+                className='input input-bordered' 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <div className='form-control'>
-              <input type='password' placeholder='Confirm Password' className='input input-bordered' />
+              <input 
+                type='password' 
+                placeholder='Confirm Password' 
+                className='input input-bordered' 
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
             </div>
             <div className='form-control text-center mt-4'>
               <button type='submit' className='btn btn-primary'>Signup</button>
