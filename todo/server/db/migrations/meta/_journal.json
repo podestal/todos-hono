@@ -15,6 +15,13 @@
       "when": 1763203804839,
       "tag": "0001_acoustic_wallop",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1763215979169,
+      "tag": "0002_sturdy_scourge",
+      "breakpoints": true
     }
   ]
 }
