@@ -1,20 +1,33 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { hc } from 'hono/client'
 import type { AppType } from '../../../server/index.ts'
 import { useQuery } from '@tanstack/react-query'
+import { authClient } from '@/lib/auth-client'
 
-const client = hc<AppType>('http://localhost:3000')
+const client = hc<AppType>('http://localhost:3000', {
+    fetch: (input: RequestInfo | URL, init?: RequestInit) =>
+      fetch(input, { ...init, credentials: 'include' }),
+  })
 
 export const Route = createFileRoute('/todos')({
-  component: RouteComponent,
+    beforeLoad: async () => {
+        const { data: session } = await authClient.getSession()
+        if (!session) {
+            throw redirect({ to: '/signin' })
+        }
+        return { session }
+    },
+    component: RouteComponent,
 })
 
 function RouteComponent() {
+
     const { data: todos, isError, error, isSuccess, isLoading } = useQuery({
         queryKey: ['todos'],
         queryFn: async () => {
             const resp = await client.api.todos.$get()
             if (!resp.ok) {
+                console.log(resp)
                 throw new Error('Failed to fetch todos')
             }
             return resp.json()
